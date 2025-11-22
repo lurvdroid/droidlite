@@ -1,0 +1,2 @@
+export const savePosts=(posts)=>{localStorage.setItem("threadlite-posts",JSON.stringify(posts));};
+export const loadPosts=()=>{if(typeof window==="undefined")return[];return JSON.parse(localStorage.getItem("threadlite-posts")||"[]");};
