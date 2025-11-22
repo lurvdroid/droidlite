@@ -36,7 +36,7 @@ export default function Home() {
     <div>
       <Navbar />
 
-      <main className="max-w-lg mx-auto p-4">
+      <main className="max-w-lg mx-auto p-4 sm:p-6 lg:p-8">
         <CreatePost addPost={addPost} />
 
         <AnimatePresence initial={false}>
