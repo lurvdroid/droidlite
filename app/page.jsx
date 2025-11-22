@@ -17,17 +17,29 @@ export default function Home() {
 
   const addPost = (text) => {
     const id = Date.now();
-    const newPosts = [{ text, id }, ...posts];
+    const newPosts = [{ id, text, replies: [] }, ...posts];
     setPosts(newPosts);
     savePosts(newPosts);
     setNewPostId(id);
-
-    // Remove highlight after 2 seconds
     setTimeout(() => setNewPostId(null), 2000);
   };
 
   const deletePost = (id) => {
     const newPosts = posts.filter((p) => p.id !== id);
+    setPosts(newPosts);
+    savePosts(newPosts);
+  };
+
+  const addReply = (postId, replyText) => {
+    const newPosts = posts.map((post) => {
+      if (post.id === postId) {
+        return {
+          ...post,
+          replies: [{ id: Date.now(), text: replyText }, ...(post.replies || [])],
+        };
+      }
+      return post;
+    });
     setPosts(newPosts);
     savePosts(newPosts);
   };
@@ -53,6 +65,7 @@ export default function Home() {
                 data={post}
                 onDelete={() => deletePost(post.id)}
                 highlight={post.id === newPostId}
+                addReply={addReply}
               />
             </motion.div>
           ))}
