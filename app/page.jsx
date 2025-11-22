@@ -44,6 +44,15 @@ export default function Home() {
     savePosts(newPosts);
   };
 
+  // ← Add this editPost function:
+  const editPost = (id, newText) => {
+    const newPosts = posts.map((post) =>
+      post.id === id ? { ...post, text: newText } : post
+    );
+    setPosts(newPosts);
+    savePosts(newPosts);
+  };
+
   return (
     <div>
       <Navbar />
@@ -66,6 +75,7 @@ export default function Home() {
                 onDelete={() => deletePost(post.id)}
                 highlight={post.id === newPostId}
                 addReply={addReply}
+                onEdit={editPost}  {/* ← Pass editPost here */}
               />
             </motion.div>
           ))}
