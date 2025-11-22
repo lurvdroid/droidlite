@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import Navbar from "./components/Navbar";
 import CreatePost from "./components/CreatePost";
 import Post from "./components/Post";
@@ -32,9 +33,20 @@ export default function Home() {
       <main className="max-w-lg mx-auto p-4">
         <CreatePost addPost={addPost} />
 
-        {posts.map((post) => (
-          <Post key={post.id} data={post} onDelete={() => deletePost(post.id)} />
-        ))}
+        <AnimatePresence initial={false}>
+          {posts.map((post) => (
+            <motion.div
+              key={post.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+              layout
+            >
+              <Post data={post} onDelete={() => deletePost(post.id)} />
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </main>
     </div>
   );
